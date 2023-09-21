@@ -7,45 +7,46 @@
 <html>
 <head>
     <title>Carga de Imágenes</title>
+    <script>
+        function allowDrop(ev) {
+          ev.preventDefault();
+        }
+        
+        function drag(ev) {
+          ev.dataTransfer.setData("text", ev.target.id);
+        }gatito
+        
+        function drop(ev) {
+          ev.preventDefault();
+          var data = ev.dataTransfer.getData("text");
+          ev.target.appendChild(document.getElementById(data));
+        }
+        </script>
+        <style>
+            #div1 {
+              width: 350px;
+              height: 200px;
+              padding: 10px;
+              border: 1px solid #aaaaaa;
+            }
+            </style>
 </head>
 <body>
-    <form id="imageForm">
-        <input type="file" id="imageInput" accept="image/*" multiple>
-        <input type="text" id="imageNumber" placeholder="Número de imagen (1, 2, 3)">
-        <input type="submit" value="Cargar Imagen">
-    </form>
+
+
+
+    <h1>Drap and drop</h1>
+
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+    </div>
+
+<img id="gatito" src="https://picsum.photos/id/40/200/200" draggable="true" ondragstart="drag(event)" >
+
+   
     
     <div id="imageContainer">
         <!-- Las imágenes seleccionadas se mostrarán aquí -->
     </div>
 
-    <script>
-        document.getElementById("imageForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            // Obtener la referencia al input de archivo
-            var input = document.getElementById("imageInput");
-
-            // Obtener el número de imagen deseado
-            var imageNumber = document.getElementById("imageNumber").value;
-
-            // Verificar si se seleccionaron imágenes
-            if (input.files && input.files.length > 0) {
-                // Recorrer las imágenes seleccionadas
-                for (var i = 0; i < input.files.length; i++) {
-                    // Verificar si el número de imagen coincide
-                    if (i + 1 == imageNumber) {
-                        // Crear un elemento de imagen para mostrarla
-                        var img = document.createElement("img");
-                        img.src = URL.createObjectURL(input.files[i]);
-
-                        // Agregar la imagen al contenedor
-                        var container = document.getElementById("imageContainer");
-                        container.appendChild(img);
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
